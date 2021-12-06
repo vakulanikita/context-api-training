@@ -1,13 +1,27 @@
+import React, { useState } from 'react'
 import { ChakraProvider } from "@chakra-ui/react"
-import '../styles/globals.css'
-import theme from '../lib/theme';
+import { Button } from '@chakra-ui/react'
+import FunctionContext from '../components/function-context'
+import ClassContext from '../components/class-context'
 
-function MyApp({ Component, pageProps }) {
+export const ThemeContext = React.createContext();
+
+
+export default function MyApp({ Component, pageProps }) {
+  const [darkTheme, setDarkTheme] = useState(true)
+
+  function toggleTheme() {
+    setDarkTheme(prevDarkTheme => !prevDarkTheme);
+  }
+
   return (
-    <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <ThemeContext.Provider value={darkTheme}>
+      <ChakraProvider>
+        <Button onClick={toggleTheme}>Toggle Theme</Button>
+        <FunctionContext />
+        <ClassContext />
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </ThemeContext.Provider>
   )
 }
-
-export default MyApp
