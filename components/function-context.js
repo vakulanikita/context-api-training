@@ -1,8 +1,9 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from '../pages/_app';
+import { useTheme, useThemeUpdate } from './theme-context'
+import { Button } from '@chakra-ui/react'
 
 export default function FunctionContext() {
-  const darkTheme = useContext(ThemeContext);
+  const darkTheme = useTheme();
+  const toggleTheme = useThemeUpdate()
   const themeStyles = {
     backgroundColor: darkTheme ? "#333" : "#CCC",
     color: darkTheme ? "#CCC" : "#333",
@@ -10,6 +11,9 @@ export default function FunctionContext() {
     margin: "2rem",
   }
   return (
-    <div style={themeStyles}>Function Theme</div>
+    <>
+      <Button onClick={toggleTheme}>Toggle Theme</Button>
+      <div style={themeStyles}>Function Theme</div>
+    </>
   )
 }
